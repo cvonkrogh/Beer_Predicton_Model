@@ -86,15 +86,25 @@ else:
 st.header("📅 Annual Brewing Calendar")
 
 if not production_next_year.empty:
-    fig_calendar = px.timeline(
+
+    fig_calendar = px.scatter(
         production_next_year,
-        x_start="production_week",
-        x_end="production_week",
+        x="production_week",
         y="beer",
-        color="volume",
-        title="Brewing Start Weeks"
+        size="volume",
+        color="packaging_strategy",
+        title="Brewing Start Weeks",
+        hover_data=["volume"]
     )
+
+    fig_calendar.update_layout(
+        yaxis_title="Beer",
+        xaxis_title="Week",
+        height=500
+    )
+
     st.plotly_chart(fig_calendar, width="stretch")
+
 else:
     st.info("No brewing scheduled.")
 
